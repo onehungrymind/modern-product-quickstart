@@ -1,11 +1,11 @@
-# modern-production-quickstart — Tracer
+# Modern Production Quickstart — Tracer
 
 > **Volume I — Production** of the *Project to Product Playbook*, made executable. Take **Tracer**, a
 > link shortener built to inner-ring best practice, and promote it across the **outer ring** —
 > containers, CI/CD, environments, IaC, observability, incident response, security — one lab at a time,
 > diffing your work against a canonical answer key. Sibling to
-> [`modern-coding-quickstart`](../modern-coding-quickstart) and
-> [`modern-e2e-quickstart`](../modern-e2e-quickstart).
+> [`Modern Coding Quickstart`](https://github.com/onehungrymind/modern-coding-quickstart) and
+> [`Modern E2E Quickstart`](https://github.com/onehungrymind/modern-e2e-quickstart).
 
 New here? Start with [`docs/intro.md`](./docs/intro.md). The Readiness Manifest (the outer-ring deltas
 R01–R14 the labs promote to product-grade) lives in [`scripts/readiness.manifest.json`](./scripts/readiness.manifest.json);
