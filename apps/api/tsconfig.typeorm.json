@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2021",
+    "lib": ["es2022"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "importHelpers": true,
+    "isolatedModules": false,
+    "outDir": "../../dist/out-tsc-typeorm",
+    "baseUrl": ".",
+    "paths": {}
+  },
+  "include": ["src/**/*.ts"]
+}

@@ -2,8 +2,12 @@ import 'reflect-metadata';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { NestFactory } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
+import { Logger } from 'nestjs-pino';
 import type { NextFunction, Request, Response } from 'express';
+
 import { AppModule } from './app/app.module';
+import type { Env } from './config/env.schema';
 import { RedirectService } from './redirect/redirect.service';
 
 /**
@@ -16,12 +20,17 @@ const RESERVED_ROOT_SEGMENTS = new Set(['api', 'favicon.ico']);
 const BARE_SEGMENT = /^\/([^/]+)\/?$/;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+
+  app.useLogger(app.get(Logger));
+
+  const config = app.get(ConfigService<Env, true>);
 
   app.use(helmet());
   app.use(cookieParser());
 
-  const origins = (process.env['CORS_ORIGINS'] ?? 'http://localhost:4200')
+  const origins = config
+    .get('CORS_ORIGINS', { infer: true })
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean);
@@ -65,7 +74,7 @@ async function bootstrap() {
       .catch(() => next());
   });
 
-  const port = process.env['PORT'] ?? 3000;
+  const port = config.get('PORT', { infer: true });
   await app.listen(port);
 }
 

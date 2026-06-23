@@ -1,0 +1,19 @@
+# gitleaks config for Tracer (R03 secrets / R13 supply chain).
+# Scans the working-tree SOURCE for secrets. Build artifacts, dependencies, and
+# local-only / example env files are out of scope.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Build artifacts, dependencies, and local-only / example env files"
+paths = [
+  '''node_modules/''',
+  '''_spike/''',
+  '''(^|/)dist/''',
+  '''\.nx/''',
+  '''\.angular/''',
+  '''(^|/)coverage/''',
+  '''package-lock\.json$''',
+  '''(^|/)\.env$''',
+  '''\.env\.example$''',
+]
