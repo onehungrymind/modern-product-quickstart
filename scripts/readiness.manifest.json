@@ -1,0 +1,131 @@
+{
+  "description": "Readiness Manifest — the outer-ring capability deltas that make Tracer a product. Each entry is a delta with a Ring, the grade where the CLIs leave it (seed), the product-grade target, the lab that promotes it, and a machine-checkable `check` (scripts/readiness/checks/<id>.mjs, exit 0 = product-grade). Assembled, this manifest IS the Production Readiness Review. Run via `npm run readiness`.",
+  "deltas": [
+    {
+      "id": "R01",
+      "capability": "Definition of done",
+      "ring": "outer",
+      "seedGrade": "absent",
+      "productGrade": "Readiness charter: SLOs + critical workflows + delta inventory",
+      "lab": "01",
+      "check": "charter parses; SLOs + both critical workflows present"
+    },
+    {
+      "id": "R02",
+      "capability": "Config",
+      "ring": "outer",
+      "seedGrade": "dev-grade — defaults in code, .env committed",
+      "productGrade": "12-factor, env-only, no committed config",
+      "lab": "02",
+      "check": "no literal config; boots from env alone"
+    },
+    {
+      "id": "R03",
+      "capability": "Secrets",
+      "ring": "outer",
+      "seedGrade": "dev-grade — in .env / source",
+      "productGrade": "externalized; nothing in source",
+      "lab": "02",
+      "check": "gitleaks clean; app reads secret from env (fails if unset)"
+    },
+    {
+      "id": "R04",
+      "capability": "Persistence",
+      "ring": "outer",
+      "seedGrade": "dev-grade — synchronize:true, local DB",
+      "productGrade": "synchronize:false, migrations-only, containerized, stateless, survives restart",
+      "lab": "02",
+      "check": "synchronize:false; migration is the only schema path; kill+restart → no data loss"
+    },
+    {
+      "id": "R05",
+      "capability": "Logs",
+      "ring": "outer",
+      "seedGrade": "dev-grade — Nest default logger",
+      "productGrade": "pino structured JSON + correlation ids",
+      "lab": "02",
+      "check": "logs parse as JSON; request id present"
+    },
+    {
+      "id": "R06",
+      "capability": "Test outer-ring",
+      "ring": "outer",
+      "seedGrade": "dev-grade — CLI basic specs",
+      "productGrade": "integration vs testcontainer + 2 E2E (Playwright/BDD) + coverage floor + mutation",
+      "lab": "03",
+      "check": "suite green; coverage ≥ floor; Stryker ≥ floor; breaking a workflow fails an E2E"
+    },
+    {
+      "id": "R07",
+      "capability": "Delivery pipeline",
+      "ring": "outer",
+      "seedGrade": "absent",
+      "productGrade": "CI gates lint+test+build; build-once-promote; DORA",
+      "lab": "04",
+      "check": "act blocks a red commit; DORA emitted"
+    },
+    {
+      "id": "R08",
+      "capability": "Environments",
+      "ring": "outer",
+      "seedGrade": "absent (one local)",
+      "productGrade": "dev + prod parity, promotion path, feature flag",
+      "lab": "05",
+      "check": "same image promotes dev→prod; flag toggles release w/o redeploy"
+    },
+    {
+      "id": "R09",
+      "capability": "Infrastructure",
+      "ring": "outer",
+      "seedGrade": "absent",
+      "productGrade": "declarative IaC, immutable, drift-checked",
+      "lab": "06",
+      "check": "destroy+apply reproduces; manual change flagged as drift"
+    },
+    {
+      "id": "R10",
+      "capability": "Observability",
+      "ring": "outer",
+      "seedGrade": "absent (logs only)",
+      "productGrade": "OTel logs+metrics+traces; SLIs/SLOs; dashboard + alert",
+      "lab": "07",
+      "check": "'healthy?' answered from dashboard; synthetic SLO burn fires alert"
+    },
+    {
+      "id": "R11",
+      "capability": "Incident response",
+      "ring": "outer",
+      "seedGrade": "absent",
+      "productGrade": "rollback path, runbook, blameless postmortem, error budget",
+      "lab": "08",
+      "check": "injected failure detected via R10, rolled back via R07; TTR recorded; postmortem present"
+    },
+    {
+      "id": "R12",
+      "capability": "App security",
+      "ring": "outer",
+      "seedGrade": "dev-grade — Zod+JWT; throttler unconfigured; no SSRF/redirect guard",
+      "productGrade": "scheme allowlist, SSRF guard, rate limiting, ASVS pass",
+      "lab": "09",
+      "check": "exploit kit returns 4xx; rate-limit 429; ASVS complete"
+    },
+    {
+      "id": "R13",
+      "capability": "Supply chain",
+      "ring": "outer",
+      "seedGrade": "absent",
+      "productGrade": "pinned deps, SBOM, dep-scan gates the pipeline",
+      "lab": "09",
+      "check": "lockfile pinned; SBOM emitted; pipeline blocks a known-vuln dep"
+    },
+    {
+      "id": "R14",
+      "capability": "Readiness gate",
+      "ring": "outer",
+      "seedGrade": "absent",
+      "productGrade": "full PRR passes; every delta product-grade",
+      "lab": "10",
+      "check": "npm run readiness all green"
+    }
+  ]
+}

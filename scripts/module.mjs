@@ -6,7 +6,7 @@ const command = process.argv[2];
 const moduleArg = process.argv[3];
 const pathArg = process.argv[4];
 
-const MODULES = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
+const MODULES = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
 
 function run(cmd, options = {}) {
   const result = execSync(cmd, { stdio: 'pipe', encoding: 'utf-8', ...options });
@@ -32,7 +32,7 @@ function validateModule(arg) {
   }
   const n = pad(arg);
   if (!MODULES.includes(n)) {
-    console.error(`Unknown module "${arg}". Modules are 00..10.`);
+    console.error(`Unknown lab "${arg}". Labs are 01..10.`);
     process.exit(1);
   }
   return n;
@@ -67,7 +67,7 @@ function begin(n) {
     run(`git checkout ${startTag}`, { stdio: 'inherit' });
     run(`git checkout -b ${branch}`, { stdio: 'inherit' });
   }
-  console.log(`\nReady. Open modules/${n}-*/README.md and follow the walkthrough.`);
+  console.log(`\nReady. Open labs/${n}-*/README.md and follow the walkthrough.`);
 }
 
 // Unlike the E2E quickstart (work confined to apps/web-e2e), learner work here
