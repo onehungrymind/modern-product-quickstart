@@ -75,6 +75,8 @@
     "appsDir": "apps",
     "libsDir": "libs"
   },
+  "neverConnectToCloud": true,
+  "ignoredGlobs": [".stryker-tmp/**"],
   "targetDefaults": {
     "test": {
       "dependsOn": ["^build"]

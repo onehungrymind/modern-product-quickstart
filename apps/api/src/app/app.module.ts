@@ -19,6 +19,7 @@ import { ClicksModule } from '../clicks/clicks.module';
 import { HealthModule } from '../health/health.module';
 import { PortsModule } from '../ports/ports.module';
 import { RedirectModule } from '../redirect/redirect.module';
+import { TestModule } from '../test/test.module';
 
 @Module({
   imports: [
@@ -86,6 +87,7 @@ import { RedirectModule } from '../redirect/redirect.module';
     ClicksModule,
     HealthModule,
     RedirectModule,
+    TestModule,
   ],
   providers: [
     { provide: APP_PIPE, useClass: ZodValidationPipe },

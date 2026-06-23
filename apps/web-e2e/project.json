@@ -3,11 +3,28 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/web-e2e/src",
-  "implicitDependencies": [
-    "web"
-  ],
-  "// targets": "to see all targets run: nx show project web-e2e --web",
-  "targets": {},
+  "implicitDependencies": ["web"],
+  "targets": {
+    "e2e": {
+      "executor": "@nx/playwright:playwright",
+      "options": {
+        "config": "{projectRoot}/playwright.config.ts"
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "reporter": "dot"
+        }
+      }
+    },
+    "bdd-gen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx bddgen --config apps/web-e2e/playwright.config.ts",
+        "cwd": "{workspaceRoot}"
+      }
+    }
+  },
   "tags": [
     "scope:web",
     "type:e2e"

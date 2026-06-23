@@ -49,6 +49,14 @@
         "jestConfig": "apps/api/jest.config.ts"
       }
     },
+    "integration": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/api-integration"],
+      "options": {
+        "jestConfig": "apps/api/jest.integration.config.ts",
+        "testTimeout": 120000
+      }
+    },
     "serve": {
       "continuous": true,
       "executor": "@nx/js:node",
