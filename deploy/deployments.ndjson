@@ -4,3 +4,4 @@
 {"sha":"d4e5f6a","env":"prod","status":"success","committed_at":"2026-06-19T09:20:00Z","deployed_at":"2026-06-19T09:48:00Z"}
 {"sha":"e5f6a7b","env":"prod","status":"success","committed_at":"2026-06-21T14:00:00Z","deployed_at":"2026-06-21T14:40:00Z"}
 {"sha":"f741c80","env":"prod","status":"success","committed_at":"2026-06-23T17:13:38.333Z","deployed_at":"2026-06-23T17:13:38.333Z"}
+{"sha":"e5f6a7b","env":"prod","status":"success","committed_at":"2026-06-21T14:00:00Z","deployed_at":"2026-06-23T18:11:00.503Z","note":"rollback"}
