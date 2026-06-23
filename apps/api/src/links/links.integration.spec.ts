@@ -16,6 +16,7 @@ import { LinksService } from './links.service';
 import { ClicksService } from '../clicks/clicks.service';
 import { RedirectService } from '../redirect/redirect.service';
 import { StubUrlPreviewProvider } from '../ports/url-preview/stub-url-preview.provider';
+import type { FeatureFlagsService } from '../feature-flags/feature-flags.service';
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -24,7 +25,9 @@ function buildLinksService(
   linkRepo: Repository<LinkEntity>,
   clickRepo: Repository<ClickEntity>,
 ): LinksService {
-  const svc = new LinksService(linkRepo, clickRepo, new StubUrlPreviewProvider());
+  // Feature flag on so the create path behaves as before these tests were written.
+  const flags = { isEnabled: async () => true } as unknown as FeatureFlagsService;
+  const svc = new LinksService(linkRepo, clickRepo, new StubUrlPreviewProvider(), flags);
   return svc;
 }
 

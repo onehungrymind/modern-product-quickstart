@@ -1,0 +1,16 @@
+node_modules
+dist
+.nx
+.angular
+coverage
+.git
+_spike
+.stryker-tmp
+reports
+test-results
+**/.features-gen
+**/test-results
+.env
+.env.local
+*.log
+.DS_Store

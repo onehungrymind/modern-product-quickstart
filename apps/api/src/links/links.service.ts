@@ -15,6 +15,7 @@ import {
   URL_PREVIEW_PROVIDER,
   type UrlPreviewProvider,
 } from '../ports/url-preview/url-preview.provider';
+import { FeatureFlagsService } from '../feature-flags/feature-flags.service';
 import type { CreateLinkDto } from './dto/create-link.dto';
 
 function toDto(e: LinkEntity): Link {
@@ -56,6 +57,7 @@ export class LinksService {
     private readonly clicks: Repository<ClickEntity>,
     @Inject(URL_PREVIEW_PROVIDER)
     private readonly urlPreview: UrlPreviewProvider,
+    private readonly flags: FeatureFlagsService,
   ) {}
 
   async create(dto: CreateLinkDto, ownerId: string): Promise<Link> {
@@ -72,8 +74,13 @@ export class LinksService {
       slug = await this.mintSlug();
     }
 
+    // Auto-fetching the target's <title> is gated behind a runtime feature flag,
+    // so the capability can be released (flag on) without a redeploy.
     let title = dto.title ?? null;
-    if (title === null || title === undefined) {
+    if (
+      (title === null || title === undefined) &&
+      (await this.flags.isEnabled('link_title_preview'))
+    ) {
       title = await this.urlPreview.fetchTitle(dto.target_url);
     }
 

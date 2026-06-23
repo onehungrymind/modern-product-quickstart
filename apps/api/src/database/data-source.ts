@@ -1,10 +1,12 @@
 import 'dotenv/config';
 import 'reflect-metadata';
-import { join } from 'node:path';
 import { DataSource, type DataSourceOptions } from 'typeorm';
 import { UserEntity } from '../users/entities/user.entity';
 import { LinkEntity } from '../links/entities/link.entity';
 import { ClickEntity } from '../clicks/entities/click.entity';
+import { FeatureFlagEntity } from '../feature-flags/entities/feature-flag.entity';
+import { InitialSchema1782220891606 } from './migrations/1782220891606-InitialSchema';
+import { AddFeatureFlags1782300000000 } from './migrations/1782300000000-AddFeatureFlags';
 
 /**
  * Postgres-only DataSource.
@@ -22,11 +24,12 @@ export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   url: process.env['DATABASE_URL'],
 
-  // Entities are listed explicitly (no glob) so the migration CLI can resolve
-  // them without ts-node glob issues.
-  entities: [UserEntity, LinkEntity, ClickEntity],
+  // Entities AND migrations are listed explicitly (no glob) so they survive the
+  // webpack bundle — a fresh container self-migrates on boot (migrationsRun) with
+  // no migration files on disk. Add each new migration class to this array.
+  entities: [UserEntity, LinkEntity, ClickEntity, FeatureFlagEntity],
 
-  migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
+  migrations: [InitialSchema1782220891606, AddFeatureFlags1782300000000],
 
   // Never auto-sync — always use migrations.
   synchronize: false,

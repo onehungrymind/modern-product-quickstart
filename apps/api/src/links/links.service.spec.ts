@@ -6,6 +6,7 @@ import { LinkEntity } from './entities/link.entity';
 import { ClickEntity } from '../clicks/entities/click.entity';
 import { URL_PREVIEW_PROVIDER } from '../ports/url-preview/url-preview.provider';
 import { StubUrlPreviewProvider } from '../ports/url-preview/stub-url-preview.provider';
+import { FeatureFlagsService } from '../feature-flags/feature-flags.service';
 
 const OWNER_ID = 'owner-uuid-1234';
 
@@ -62,6 +63,10 @@ describe('LinksService', () => {
         {
           provide: URL_PREVIEW_PROVIDER,
           useClass: StubUrlPreviewProvider,
+        },
+        {
+          provide: FeatureFlagsService,
+          useValue: { isEnabled: jest.fn().mockResolvedValue(true) },
         },
       ],
     }).compile();
