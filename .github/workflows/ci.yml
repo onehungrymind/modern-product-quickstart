@@ -1,0 +1,44 @@
+name: CI
+
+# The delivery pipeline (R07). Gates every commit on lint + typecheck + unit tests
+# + build, builds the deployable artifacts ONCE, and emits the four DORA metrics.
+# Runnable locally with `act` (see scripts/readiness/checks/r07.mjs):
+#   act push -W .github/workflows/ci.yml -P ubuntu-latest=catthehacker/ubuntu:act-latest
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    name: Lint · Typecheck · Test · Build (the gate)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm ci --no-audit --no-fund
+      - name: Lint
+        run: npx nx run-many -t lint
+      - name: Typecheck
+        run: npx nx run-many -t typecheck
+      - name: Unit tests
+        run: npx nx run-many -t test
+      - name: Build once (the promotable artifact)
+        run: npx nx run-many -t build -p api web --configuration=production
+      # A red commit (lint/typecheck/test/build failure) fails this job, so it can
+      # never be promoted — build-once, promote-the-same-artifact.
+
+  dora:
+    name: DORA metrics
+    runs-on: ubuntu-latest
+    needs: verify
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Emit the four DORA metrics
+        run: node scripts/dora.mjs
