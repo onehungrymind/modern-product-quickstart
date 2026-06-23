@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: tracer
+      POSTGRES_USER: tracer
+      POSTGRES_PASSWORD: tracer
+    ports:
+      # Host 5432 is already in use locally; map to 5433 (DATABASE_URL points here).
+      - '5433:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U tracer']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  lgtm:
+    image: grafana/otel-lgtm:latest
+    ports:
+      # Host 3000 is occupied by the local web dev server; Grafana runs on 3001.
+      - '3001:3000'
+      # OTLP gRPC collector
+      - '4317:4317'
+      # OTLP HTTP collector (traces/metrics/logs)
+      - '4318:4318'
+    volumes:
+      # Dashboard provisioning — tracer.yaml tells Grafana where to find dashboards.
+      - ./observability/provisioning/dashboards:/otel-lgtm/grafana/conf/provisioning/dashboards:ro
+      # The actual dashboard JSON files.
+      - ./observability/dashboards:/otel-lgtm/grafana/dashboards:ro
+      # Alerting rules provisioned via Grafana unified-alerting YAML.
+      - ./observability/provisioning/alerting:/otel-lgtm/grafana/conf/provisioning/alerting:ro
+    environment:
+      # Disable login for local dev convenience (admin:admin still works).
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+      GF_AUTH_ANONYMOUS_ORG_ROLE: 'Admin'
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://localhost:3000/api/health || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:

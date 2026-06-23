@@ -1,3 +1,4 @@
+import './tracing';
 import 'reflect-metadata';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
