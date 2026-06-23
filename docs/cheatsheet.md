@@ -26,10 +26,15 @@ npm run verify                 # typecheck + lint + test + build — must be gre
 
 ```bash
 npm run db:up                  # docker compose up -d postgres  →  :5433
+npm run migration:run          # create the schema
+npm run seed                   # demo user (below)
 npm run serve:api              # nx serve api  →  http://localhost:3000
 npm run serve:web              # nx serve web  →  http://localhost:4200
 npm start                      # both in parallel
 ```
+
+**Demo login:** `demo@tracer.local` / `tracerdemo123` (or **Register** in the UI). Re-run `npm run seed`
+anytime to recreate it — it's idempotent.
 
 ## Module workflow
 

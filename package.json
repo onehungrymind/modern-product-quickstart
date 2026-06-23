@@ -30,6 +30,7 @@
     "db:up": "docker compose up -d postgres",
     "db:down": "docker compose down",
     "db:logs": "docker compose logs -f postgres",
+    "seed": "node scripts/seed.mjs",
     "graph": "nx graph",
     "clean": "nx reset",
     "readiness": "node scripts/readiness.mjs",

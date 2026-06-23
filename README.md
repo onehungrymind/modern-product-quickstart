@@ -46,10 +46,13 @@ and is well-built — it simply isn't a product yet. The deliberately dev-grade 
 npm install
 cp .env.example .env          # config is env-only (R02/R03) — the API fails loud without it
 npm run db:up                 # Postgres on localhost:5433 (host 5432 is often taken)
-npm run serve:api             # NestJS on :3000 (runs migrations on boot)
-npm run serve:web             # Angular on :4200 (proxies /api → :3000)
+npm run migration:run         # create the schema
+npm run seed                  # add the demo user (below)
+npm start                     # serve api (:3000) + web (:4200) together
 # open http://localhost:4200
 ```
+
+**Log in** as `demo@tracer.local` / `tracerdemo123` — or click **Register** to create your own account.
 
 > Starting the labs instead? `git checkout seed` (the dev-grade starting point) or `npm run module:begin 01`.
 
