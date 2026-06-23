@@ -1,0 +1,89 @@
+{
+  "description": "Workshop lab tag manifest. Each entry maps a tag to its commit SHA. scripts/rebuild-tags.mjs reads this to recreate/move tags after history changes.",
+  "tags": [
+    {
+      "tag": "seed",
+      "commit": "2ebd4fb26385c44f78e8662a77ea4807fd66d899"
+    },
+    {
+      "tag": "01-start",
+      "commit": "c133a078303cded8f62c7ff5145d6652697e8608"
+    },
+    {
+      "tag": "01-complete",
+      "commit": "4f3c16b7979c93bd9b0977358a742933870e22d4"
+    },
+    {
+      "tag": "02-start",
+      "commit": "dbaa6a3cdefdeae5fe1e536ad5071c7fe1f1516b"
+    },
+    {
+      "tag": "02-complete",
+      "commit": "1d2ca36b586982c950265ee9b63abbbc5f89f256"
+    },
+    {
+      "tag": "03-start",
+      "commit": "1fc19b7b66fab1fe65eec81f8ed5275b021cb69f"
+    },
+    {
+      "tag": "03-complete",
+      "commit": "d3020ad3e10e9a50ac752eed566628db0ac1950f"
+    },
+    {
+      "tag": "04-start",
+      "commit": "a8ea64977cf99511bd1cacec849b588b40a3e74b"
+    },
+    {
+      "tag": "04-complete",
+      "commit": "f0ed34ffb748d605df233d0a78ac64a790eb2246"
+    },
+    {
+      "tag": "05-start",
+      "commit": "0e84d11fbf5108869c8c7427ae4c2e266cd6280b"
+    },
+    {
+      "tag": "05-complete",
+      "commit": "7c137c62f9d52e7f59136a50ad7b61bf07727888"
+    },
+    {
+      "tag": "06-start",
+      "commit": "a10cf88e7e0c6c66223b7135a7ee6719587b679c"
+    },
+    {
+      "tag": "06-complete",
+      "commit": "5c1d9c8049ef57d72c16af7856cc0e9a9e0a3ff0"
+    },
+    {
+      "tag": "07-start",
+      "commit": "07ff6b7c0e20be09def615e7d53b4a33194fac74"
+    },
+    {
+      "tag": "07-complete",
+      "commit": "1fdeb7a75a90dcba768ec49408a22370d318f314"
+    },
+    {
+      "tag": "08-start",
+      "commit": "10470d35651324628a52d2a41917070e300cca7b"
+    },
+    {
+      "tag": "08-complete",
+      "commit": "7001c33e230c6a8d7a9fb757cf802961a01cc961"
+    },
+    {
+      "tag": "09-start",
+      "commit": "5b587db863e26c09c812937f502aee77b14d5f13"
+    },
+    {
+      "tag": "09-complete",
+      "commit": "676dd54377b6e1e848de43ee0b30b41ad7efbf2c"
+    },
+    {
+      "tag": "10-start",
+      "commit": "d9d60279b3d96ac17f79f52e00619f2f049bc7b1"
+    },
+    {
+      "tag": "10-complete",
+      "commit": "24b54e5e1a60ba056b7230302c533167dc1a0fb8"
+    }
+  ]
+}
