@@ -40,11 +40,14 @@ these): `synchronize: true` (no migrations), Nest default logger, `.env` committ
 
 ```bash
 npm install
+cp .env.example .env          # config is env-only (R02/R03) — the API fails loud without it
 npm run db:up                 # Postgres on localhost:5433 (host 5432 is often taken)
-npm run serve:api             # NestJS on :3000 (synchronize:true auto-creates tables)
+npm run serve:api             # NestJS on :3000 (runs migrations on boot)
 npm run serve:web             # Angular on :4200 (proxies /api → :3000)
 # open http://localhost:4200
 ```
+
+> Starting the labs instead? `git checkout seed` (the dev-grade starting point) or `npm run module:begin 01`.
 
 ## Verify
 

@@ -1,5 +1,20 @@
 # Troubleshooting
 
+## Configuration
+
+**`npm run serve:api` exits with a `ZodError` for `DATABASE_URL` / `JWT_SECRET` (`expected string, received undefined`).**
+Config is env-only from Lab 02 on (R02/R03) — the API validates its environment at boot and
+**fails loud** when a required variable is missing. There is no committed `.env` (R03 keeps secrets out
+of source; only `.env.example` ships). Copy it and you're set:
+
+```bash
+cp .env.example .env
+npm run serve:api
+```
+
+The defaults in `.env.example` are dev-safe (`DATABASE_URL=…@localhost:5433/tracer`, a long-enough dev
+`JWT_SECRET`). Change the secret before any real deployment.
+
 ## Docker and Postgres
 
 **Docker is not running.**
