@@ -7,8 +7,10 @@
 > [`modern-coding-quickstart`](../modern-coding-quickstart) and
 > [`modern-e2e-quickstart`](../modern-e2e-quickstart).
 
-See [`MODERN-PRODUCTION-PLAN.md`](./MODERN-PRODUCTION-PLAN.md) for the full build plan and the
-Readiness Manifest (the outer-ring capability deltas R01–R14 that the labs promote to product-grade).
+New here? Start with [`docs/intro.md`](./docs/intro.md). The Readiness Manifest (the outer-ring deltas
+R01–R14 the labs promote to product-grade) lives in [`scripts/readiness.manifest.json`](./scripts/readiness.manifest.json);
+the full build plan and design rationale are in [`_internal/`](./_internal) (`MODERN-PRODUCTION-PLAN.md`,
+`LAB-DESIGN.md`).
 
 ## Tracer, the app
 
