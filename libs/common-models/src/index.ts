@@ -11,3 +11,4 @@ export * from './lib/schemas/click.schema';
 export * from './lib/schemas/auth.schema';
 export * from './lib/slug';
 export * from './lib/expiry';
+export * from './lib/url-safety';

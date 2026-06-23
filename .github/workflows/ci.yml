@@ -31,6 +31,27 @@ jobs:
       # A red commit (lint/typecheck/test/build failure) fails this job, so it can
       # never be promoted — build-once, promote-the-same-artifact.
 
+  supply-chain:
+    name: SBOM + dependency scan (R13)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm ci --no-audit --no-fund
+      - name: Generate CycloneDX SBOM
+        run: npm run sbom
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: reports/sbom.json
+      # Dependency scan gates the pipeline — a known-vuln (critical) runtime dep fails the build.
+      - name: Dependency scan (npm audit)
+        run: npm run audit
+
   dora:
     name: DORA metrics
     runs-on: ubuntu-latest

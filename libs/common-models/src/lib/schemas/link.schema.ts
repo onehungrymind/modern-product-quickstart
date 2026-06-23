@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { SLUG_PATTERN } from '../slug';
+import { isSafeTargetUrl } from '../url-safety';
 
 /**
  * Link — a short slug that redirects to a target URL. The aggregate Tracer is built around.
@@ -21,7 +22,17 @@ export type Link = z.infer<typeof LinkSchema>;
 
 /** Input to create a link. The server mints `id`, `slug` (if omitted), `owner_id`, `created_at`. */
 export const CreateLinkSchema = z.object({
-  target_url: z.url(),
+  /**
+   * Scheme allowlist + private-address guard (OWASP SSRF A10:2021 / A05:2025).
+   * Only http and https are accepted; IP literals in loopback, private, or link-local
+   * ranges are rejected; localhost / *.localhost are blocked.
+   */
+  target_url: z
+    .url()
+    .refine(isSafeTargetUrl, {
+      message:
+        'target_url must use http or https and must not point to a private, loopback, or link-local address',
+    }),
   title: z.string().max(200).nullable().optional(),
   slug: z.string().regex(SLUG_PATTERN).optional(),
   expires_at: z.iso.datetime({ offset: true }).nullable().optional(),

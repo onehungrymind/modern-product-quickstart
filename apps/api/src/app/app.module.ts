@@ -5,6 +5,7 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD, APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
 import { ZodValidationPipe } from 'nestjs-zod';
 
@@ -32,6 +33,14 @@ import { TestModule } from '../test/test.module';
       envFilePath: ['.env'],
       validate: (raw: Record<string, unknown>) => validateEnv(raw),
     }),
+
+    /**
+     * Global rate limiting (OWASP A04:2021 — Rate Limiting / DoS protection).
+     * 200 requests per IP per minute. Conservative enough that the e2e suite and
+     * the observability probe never hit the ceiling; aggressive enough that a burst
+     * exploit of ~250 rapid requests will receive at least one 429.
+     */
+    ThrottlerModule.forRoot([{ ttl: 60_000, limit: 200 }]),
 
     /**
      * Structured JSON logging with auto-generated correlation IDs.
@@ -91,6 +100,9 @@ import { TestModule } from '../test/test.module';
   ],
   providers: [
     { provide: APP_PIPE, useClass: ZodValidationPipe },
+    // Rate limiting guard — must come before JwtAuthGuard so unauthenticated
+    // bursts (e.g. login brute-force) are throttled at the edge.
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
     { provide: APP_GUARD, useClass: JwtAuthGuard },
   ],
 })
