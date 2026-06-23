@@ -96,6 +96,17 @@ try {
     await new Promise((r) => setTimeout(r, 5000));
   }
 
+  // Final settle + re-query: by now (esp. once the alert fired) the metric/logs have
+  // definitely been scraped, so don't let a mid-loop race decide the verdict.
+  await new Promise((r) => setTimeout(r, 4000));
+  if (!metricSeen) metricSeen = (await promQuery('tracer_redirect_duration_ms_milliseconds_count')).length > 0;
+  if (!logsSeen) {
+    const lr = await fetch(`${GRAFANA}/api/datasources/proxy/uid/loki/loki/api/v1/label/service_name/values`, {
+      headers: AUTH,
+    }).catch(() => null);
+    logsSeen = lr?.ok ? (await lr.json())?.data?.includes('tracer-api') : false;
+  }
+
   // "healthy?" is answerable from the dashboard's backing signals.
   p.assert(metricSeen, 'redirect SLI metric present in Prometheus (dashboard is backed by data)');
   p.assert(logsSeen, 'tracer-api logs present in Loki');
