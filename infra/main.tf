@@ -38,6 +38,7 @@ variable "env_ports" {
   default = {
     dev   = { api = 13000, web = 14200, db = 15432 }
     prod  = { api = 13001, web = 14201, db = 15433 }
+    probe = { api = 13002, web = 14202, db = 15434 } # used by the readiness check in isolation
   }
 }
 
