@@ -1,0 +1,23 @@
+node_modules/
+dist/
+tmp/
+.nx/cache
+.nx/workspace-data
+.angular/
+coverage/
+# NOTE: .env is intentionally COMMITTED at the seed (dev-grade config/secrets — R02/R03).
+# Lab 02 externalizes it; Lab 09 adds gitleaks. .env.local stays private.
+.env.local
+*.log
+
+# Build/spike scratch (not part of the product)
+_spike/
+.DS_Store
+test-output/
+playwright-report/
+apps/web-e2e/.auth/
+vitest.config.*.timestamp*
+
+.angular
+
+__screenshots__/

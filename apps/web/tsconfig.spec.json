@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/apps/web-spec",
+    "types": ["vitest/globals"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts"],
+  "references": [
+    {
+      "path": "../../libs/material/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/core-state/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/core-data/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/common-models/tsconfig.lib.json"
+    }
+  ]
+}

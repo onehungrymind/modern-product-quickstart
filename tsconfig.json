@@ -1,0 +1,34 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./libs/common-models"
+    },
+    {
+      "path": "./libs/design-tokens"
+    },
+    {
+      "path": "./libs/core-state"
+    },
+    {
+      "path": "./libs/core-data"
+    },
+    {
+      "path": "./libs/material"
+    },
+    {
+      "path": "./apps/api-e2e"
+    },
+    {
+      "path": "./apps/web-e2e"
+    },
+    {
+      "path": "./apps/api"
+    },
+    {
+      "path": "./apps/web"
+    }
+  ]
+}
