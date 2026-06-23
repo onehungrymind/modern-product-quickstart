@@ -1,0 +1,7 @@
+{
+  "name": "tracer-vuln-fixture",
+  "version": "0.0.0",
+  "description": "A deliberately vulnerable dependency set — proves the pipeline dep-scan blocks known-vuln deps (R13).",
+  "private": true,
+  "dependencies": { "minimist": "1.2.0" }
+}
