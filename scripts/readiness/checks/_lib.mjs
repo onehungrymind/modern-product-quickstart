@@ -56,6 +56,10 @@ const DIST_MAIN = 'dist/apps/api/main.js';
 /** Build the api once (webpack) if its dist bundle is missing. */
 export function ensureApiBuilt() {
   if (exists(DIST_MAIN)) return;
+  // Typecheck first so TypeScript project references (e.g. @tracer/common-models)
+  // emit their declarations to dist/out-tsc, which the webpack tsc build consumes —
+  // otherwise a clean checkout fails with TS6305. Keeps the PRR self-contained.
+  execFileSync('npx', ['nx', 'typecheck', 'api', '--skip-nx-cache'], { cwd: root, stdio: 'ignore' });
   execFileSync('npx', ['nx', 'build', 'api', '--skip-nx-cache'], { cwd: root, stdio: 'ignore' });
 }
 
