@@ -27,9 +27,13 @@ passes). An Nx monorepo: separated **Angular** web (zoneless, NgRx `links` featu
 ## The `seed` tag — where you start
 
 `seed` is the honest CLI-standard app: **inner ring done well, outer ring dev-grade or absent**. It runs
-and is well-built — it simply isn't a product yet. Deliberately dev-grade at the seed (the labs harden
-these): `synchronize: true` (no migrations), Nest default logger, `.env` committed with defaults,
-`@nestjs/throttler` installed but unconfigured, no CI/IaC/observability.
+and is well-built — it simply isn't a product yet. The deliberately dev-grade bits — each one a lab's target:
+
+- **Persistence** — `synchronize: true`, no migrations
+- **Logs** — Nest's default logger, not structured JSON
+- **Config & secrets** — `.env` committed, defaults in code
+- **Rate limiting** — `@nestjs/throttler` installed but unconfigured
+- **Delivery · infra · observability** — none yet (no CI, IaC, or OpenTelemetry)
 
 ## Prerequisites
 
